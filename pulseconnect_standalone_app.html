@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PulseConnect - Employee Connectivity Platform</title>
+    
+    <!-- Google Font: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        slate: {
+                            900: '#0f172a',
+                            950: '#020617',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Alpine.js CDN (handles state & interaction) -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        [x-cloak] { display: none !important; }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #020617;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #334155;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans antialiased selection:bg-indigo-500 selection:text-white" x-data="appState()" x-init="initApp()">
+
+    <!-- Top Global Nav -->
+    <nav class="border-b border-slate-800 bg-slate-900/90 backdrop-blur-md sticky top-0 z-50 px-4 lg:px-8 py-3">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-3 cursor-pointer" @click="currentTab = 'landing'; window.scrollTo({ top: 0, behavior: 'smooth' });">
+                <div class="bg-gradient-to-tr from-indigo-500 to-violet-500 p-2.5 rounded-xl text-white shadow-lg shadow-indigo-500/20">
+                    <i data-lucide="compass" class="w-6 h-6 animate-pulse"></i>
+                </div>
+                <div>
+                    <span class="text-xl font-black tracking-tight bg-gradient-to-r from-white via-indigo-200 to-indigo-400 bg-clip-text text-transparent">
+                        PulseConnect
+                    </span>
+                    <span class="text-[10px] block font-semibold text-indigo-400 tracking-wider uppercase">TeamMesh OS</span>
+                </div>
+            </div>
+
+            <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300">
+                <a href="#features" class="hover:text-white transition-colors" x-show="currentTab === 'landing'">Features</a>
+                <a href="#compliance" class="hover:text-white transition-colors" x-show="currentTab === 'landing'">Safety & Trust</a>
+                <a href="#pricing" class="hover:text-white transition-colors" x-show="currentTab === 'landing'">Pricing Plan</a>
+                <span class="text-xs px-2 py-1 bg-indigo-950/80 border border-indigo-800/60 rounded-md text-indigo-300">
+                    SaaS Sandbox App
+                </span>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <button 
+                    @click="toggleMainTab()"
+                    class="px-5 py-2 rounded-xl font-bold text-sm tracking-wide transition-all shadow-lg bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-600 hover:to-violet-700 text-white shadow-indigo-500/10"
+                >
+                    <span x-text="currentTab === 'landing' ? 'Launch Sandbox Demo ⚡' : 'Back to Pitch Landing'"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ========================================== -->
+    <!-- TAB 1: MARKETING PITCH LANDING PAGE        -->
+    <!-- ========================================== -->
+    <div x-show="currentTab === 'landing'" class="animate-fadeIn" x-cloak>
+        
+        <!-- Hero Section -->
+        <section class="relative overflow-hidden pt-20 pb-24 px-4 lg:px-8 border-b border-slate-800/80">
+            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-950/40 via-slate-900 to-slate-950 pointer-events-none"></div>
+            
+            <div class="max-w-6xl mx-auto text-center relative z-10">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800/60 border border-slate-700/80 text-xs font-semibold text-indigo-300 mb-6">
+                    <i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-400"></i>
+                    Empowering Over 100,000+ Colleagues Worldwide
+                </div>
+                
+                <h1 class="text-4xl md:text-6xl font-black tracking-tight leading-tight mb-6">
+                    The Employee Connectivity Engine <br>
+                    <span class="bg-gradient-to-r from-indigo-400 via-violet-400 to-pink-500 bg-clip-text text-transparent">
+                        Designed for Modern Workplace Synergy
+                    </span>
+                </h1>
+                
+                <p class="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto mb-10 leading-relaxed">
+                    PulseConnect combines professional skill tracking, AI-assisted mentorship, dynamic org charting, and compliance-first friendship discovery. Replace static directories with a vibrant workspace network.
+                </p>
+
+                <div class="flex flex-wrap justify-center gap-4">
+                    <button 
+                        @click="currentTab = 'demo'; demoTab = 'dashboard'; window.scrollTo({ top: 0, behavior: 'smooth' });"
+                        class="px-8 py-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-base shadow-xl shadow-indigo-600/20 transition-all flex items-center gap-2.5 hover:translate-y-[-1px]"
+                    >
+                        Explore Live Sandbox App <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                    </button>
+                    <a 
+                        href="#pricing"
+                        class="px-8 py-4 rounded-xl bg-slate-800/80 hover:bg-slate-800 text-slate-200 font-bold text-base border border-slate-700/80 transition-all"
+                    >
+                        View Corporate Plans
+                    </a>
+                </div>
+
+                <!-- Dynamic Preview Frame -->
+                <div class="mt-16 bg-slate-950/80 border border-slate-800 p-3 rounded-2xl shadow-2xl max-w-4xl mx-auto backdrop-blur-sm relative">
+                    <div class="absolute -top-3 left-6 flex gap-1.5">
+                        <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                    </div>
+                    <div class="bg-slate-900/90 rounded-lg p-5 text-left border border-slate-800/50">
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-800 pb-4 mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="bg-indigo-500/20 p-2 rounded-lg text-indigo-400">
+                                    <i data-lucide="users" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-sm">PulseConnect Search Engine</h4>
+                                    <p class="text-xs text-slate-400">Connecting cross-functional experts internally</p>
+                                </div>
+                            </div>
+                            <div class="bg-indigo-950/80 px-3 py-1 rounded border border-indigo-800/60 text-xs text-indigo-300 font-medium">
+                                Query: "Find a Product Manager who knows Silicone Tech & rides motorcycles"
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4 bg-slate-950/50 p-4 rounded-xl border border-slate-800">
+                            <img 
+                                src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=150" 
+                                alt="Rutvik" 
+                                class="w-16 h-16 rounded-full object-cover ring-2 ring-indigo-500/50"
+                            >
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between">
+                                    <h5 class="font-bold text-slate-100 text-base">Rutvik Warkar</h5>
+                                    <span class="text-[11px] font-semibold text-emerald-400 bg-emerald-950/50 border border-emerald-800 px-2 py-0.5 rounded">Open to Networking</span>
+                                </div>
+                                <p class="text-xs text-indigo-300 font-medium">Product Manager • Product Development</p>
+                                <div class="flex flex-wrap gap-1.5 mt-2">
+                                    <span class="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-300">Silicone Tech</span>
+                                    <span class="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-300">CRM Systems</span>
+                                    <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-950 text-indigo-200">Motorcycles</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Problem vs Solution Matrix -->
+        <section id="features" class="py-24 px-4 lg:px-8 max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-extrabold tracking-tight mb-4">Why Organizations Need PulseConnect</h2>
+                <p class="text-slate-400 max-w-2xl mx-auto">Traditional directories only list emails. ConnectSphere orchestrates genuine professional, social, and optional personal relationships.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-16">
+                <div class="bg-red-950/10 border border-red-900/30 rounded-2xl p-8">
+                    <div class="bg-red-500/10 text-red-400 w-12 h-12 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="shield-alert" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-red-200 mb-4">The Organization Hurdles</h3>
+                    <ul class="space-y-3.5 text-slate-300 text-sm">
+                        <li class="flex items-start gap-3">
+                            <span class="text-red-500 font-bold mt-0.5">✕</span>
+                            <span>Colleagues in organizations with 100+ employees feel isolated from other divisions.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-red-500 font-bold mt-0.5">✕</span>
+                            <span>No structured way to locate niche experts, leading to wasted outsourcing and redundancy.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-red-500 font-bold mt-0.5">✕</span>
+                            <span>Under-utilization of internal peer mentoring due to basic HR information cards.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-red-500 font-bold mt-0.5">✕</span>
+                            <span>Workplace isolation limits collaborative innovation and degrades staff retention rates.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-emerald-950/10 border border-emerald-900/30 rounded-2xl p-8">
+                    <div class="bg-emerald-500/10 text-emerald-400 w-12 h-12 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="shield-check" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-emerald-200 mb-4">The PulseConnect Solution</h3>
+                    <ul class="space-y-3.5 text-slate-300 text-sm">
+                        <li class="flex items-start gap-3">
+                            <span class="text-emerald-400 font-bold mt-0.5">✓</span>
+                            <span>Instant visual org maps linking direct stakeholders, managers, and project leaders.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-emerald-400 font-bold mt-0.5">✓</span>
+                            <span>Shared hobby networks (cricket, gaming, photography) to trigger cross-functional communication.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-emerald-400 font-bold mt-0.5">✓</span>
+                            <span>AI-driven internal mentoring recommendations based on deep profile skills.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-emerald-400 font-bold mt-0.5">✓</span>
+                            <span>Completely opt-in relationship discovery hub allowing friendships or mutual dating safely.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Integrated Anatomy -->
+            <h3 class="text-2xl font-bold text-center mt-12 mb-8">Integrated Collaboration Anatomy</h3>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-slate-950/60 border border-slate-800 p-6 rounded-xl">
+                    <div class="text-indigo-400 font-bold mb-2">01 / PROFESSIONAL LAYER</div>
+                    <h4 class="font-bold text-lg mb-2">Skills & Org Mapping</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed">Search with custom skill filters. Pinpoint team coordinates immediately on interactive organizational trees.</p>
+                </div>
+                <div class="bg-slate-950/60 border border-slate-800 p-6 rounded-xl">
+                    <div class="text-indigo-400 font-bold mb-2">02 / SOCIAL LAYER</div>
+                    <h4 class="font-bold text-lg mb-2">Cross-Functional Clubs</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed">Create and manage clubs, gaming societies, or local sports meetups directly integrated into corporate calendars.</p>
+                </div>
+                <div class="bg-slate-950/60 border border-slate-800 p-6 rounded-xl">
+                    <div class="text-rose-400 font-bold mb-2">03 / DISCOVERY LAYER (Optional)</div>
+                    <h4 class="font-bold text-lg mb-2">Mutual Connection Matching</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed">Double opt-in relationship profiles for networking, casual friendships, or dating. Toggleable globally by corporate HR.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- HR & Trust Compliance -->
+        <section id="compliance" class="py-20 px-4 lg:px-8 bg-slate-950/80 border-y border-slate-800">
+            <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2">
+                    <div class="bg-rose-500/10 text-rose-400 w-12 h-12 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="alert-triangle" class="w-6 h-6 text-rose-400"></i>
+                    </div>
+                    <h2 class="text-3xl font-extrabold tracking-tight mb-4">Enterprise Compliance & Harassment Safeguards</h2>
+                    <p class="text-slate-300 text-sm mb-6 leading-relaxed">
+                        We acknowledge that relationship features inside a company present significant compliance responsibilities. Our system mitigates risks cleanly through state-of-the-art technical boundaries.
+                    </p>
+                    <div class="space-y-4 text-xs text-slate-400">
+                        <div class="flex gap-3">
+                            <div class="bg-indigo-950/50 p-2 rounded text-indigo-400 h-8 w-8 flex items-center justify-center flex-shrink-0">
+                                1
+                            </div>
+                            <div>
+                                <strong class="text-slate-200">Global Admin Switch:</strong> HR managers can turn the discovery layer on/off completely or limit it exclusively to "Friendship & Professional Networking".
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <div class="bg-indigo-950/50 p-2 rounded text-indigo-400 h-8 w-8 flex items-center justify-center flex-shrink-0">
+                                2
+                            </div>
+                            <div>
+                                <strong class="text-slate-200">Strict Double Opt-In:</strong> No dating or relationship status is public. It is only unlocked to a target user if BOTH users explicitly indicate interest.
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <div class="bg-indigo-950/50 p-2 rounded text-indigo-400 h-8 w-8 flex items-center justify-center flex-shrink-0">
+                                3
+                            </div>
+                            <div>
+                                <strong class="text-slate-200">Reporting Safeguards:</strong> Embedded reporting capabilities linked to HR compliance tools to deter unwanted behaviors.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/2 bg-slate-900 border border-slate-800 p-8 rounded-2xl">
+                    <h3 class="font-extrabold text-lg mb-4 text-slate-100 flex items-center gap-2">
+                        <i data-lucide="shield-check" class="w-5 h-5 text-indigo-400"></i> Secure Architecture Setup
+                    </h3>
+                    <p class="text-xs text-slate-400 mb-6">See how permissions are distributed depending on organizational settings:</p>
+                    
+                    <div class="space-y-3">
+                        <div class="p-3.5 bg-slate-950/80 rounded-xl border border-slate-800">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-xs font-bold text-indigo-300">Dating Layer Setting</span>
+                                <span class="text-[10px] uppercase font-bold text-slate-400 px-1.5 py-0.5 bg-slate-800 rounded">Employer Discretionary</span>
+                            </div>
+                            <p class="text-[11px] text-slate-400">Can be disabled with one click, preserving professional tool operations.</p>
+                        </div>
+
+                        <div class="p-3.5 bg-slate-950/80 rounded-xl border border-slate-800">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-xs font-bold text-emerald-400">GDPR & SOC-2 Audit Logs</span>
+                                <span class="text-[10px] uppercase font-bold text-emerald-400 px-1.5 py-0.5 bg-emerald-950/50 rounded">Compliant</span>
+                            </div>
+                            <p class="text-[11px] text-slate-400">All direct chats are fully logged or configured with auto-expire sequences as mandated by company compliance rules.</p>
+                        </div>
+
+                        <div class="p-3.5 bg-slate-950/80 rounded-xl border border-slate-800">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-xs font-bold text-slate-200">Anti-Harassment Protocols</span>
+                                <span class="text-[10px] uppercase font-bold text-indigo-400 px-1.5 py-0.5 bg-indigo-950/50 rounded">Built-In</span>
+                            </div>
+                            <p class="text-[11px] text-slate-400">Prevents unsolicited message blasts from senior hierarchy members to junior members through level-based safety blocks.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Pricing & ROI -->
+        <section id="pricing" class="py-24 px-4 lg:px-8 max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-extrabold tracking-tight mb-4">Transparent Enterprise Licensing</h2>
+                <p class="text-slate-400">Calculate exactly how much you save on retention and directory software with our flexible sizing options.</p>
+            </div>
+
+            <!-- Slider ROI Box -->
+            <div class="bg-slate-950/50 border border-slate-800/80 rounded-2xl p-6 md:p-8 mb-16 max-w-4xl mx-auto">
+                <h3 class="font-extrabold text-lg mb-6 text-center text-slate-200 font-sans">Dynamic SaaS Cost Calculator</h3>
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-300 mb-3">
+                            Number of Employees: <span class="text-indigo-400 text-lg font-bold" x-text="employeeSlider.toLocaleString()"></span>
+                        </label>
+                        <input 
+                            type="range" 
+                            min="100" 
+                            max="10000" 
+                            step="100" 
+                            x-model="employeeSlider"
+                            class="w-full accent-indigo-500 h-2 bg-slate-800 rounded-lg cursor-pointer"
+                        >
+                        <div class="flex justify-between text-xs text-slate-500 mt-2">
+                          <span>100 Employees</span>
+                          <span>10,000+ Employees</span>
+                        </div>
+
+                        <div class="mt-8">
+                          <span class="text-sm font-semibold text-slate-300 block mb-3">Choose Your Desired Tier:</span>
+                          <div class="grid grid-cols-3 gap-2">
+                            <button
+                              @click="selectedPlan = 'Starter'"
+                              :class="selectedPlan === 'Starter' ? 'bg-indigo-600 border-indigo-500 text-white shadow-lg' : 'bg-slate-900 border-slate-800 hover:bg-slate-800 text-slate-300'"
+                              class="py-2 px-3 text-xs rounded-xl font-bold border transition-all"
+                            >
+                              Starter
+                            </button>
+                            <button
+                              @click="selectedPlan = 'Professional'"
+                              :class="selectedPlan === 'Professional' ? 'bg-indigo-600 border-indigo-500 text-white shadow-lg' : 'bg-slate-900 border-slate-800 hover:bg-slate-800 text-slate-300'"
+                              class="py-2 px-3 text-xs rounded-xl font-bold border transition-all"
+                            >
+                              Professional
+                            </button>
+                            <button
+                              @click="selectedPlan = 'Enterprise'"
+                              :class="selectedPlan === 'Enterprise' ? 'bg-indigo-600 border-indigo-500 text-white shadow-lg' : 'bg-slate-900 border-slate-800 hover:bg-slate-800 text-slate-300'"
+                              class="py-2 px-3 text-xs rounded-xl font-bold border transition-all"
+                            >
+                              Enterprise
+                            </button>
+                          </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 text-center">
+                        <div class="text-xs text-indigo-400 font-bold uppercase tracking-widest mb-1" x-text="selectedPlan + ' Licensing Plan'"></div>
+                        <div class="text-3xl font-black text-slate-100" x-text="'$' + planRate[selectedPlan] + '/user/month'"></div>
+                        <div class="h-px bg-slate-800 my-4"></div>
+                        
+                        <div class="space-y-2 mb-6 text-left">
+                          <div class="flex justify-between text-sm">
+                            <span class="text-slate-400">Monthly Investment</span>
+                            <strong class="text-slate-200" x-text="'$' + (employeeSlider * planRate[selectedPlan]).toLocaleString() + '/mo'"></strong>
+                          </div>
+                          <div class="flex justify-between text-sm">
+                            <span class="text-slate-400">Annual Agreement Value</span>
+                            <strong class="text-indigo-400" x-text="'$' + (employeeSlider * planRate[selectedPlan] * 12).toLocaleString() + '/yr'"></strong>
+                          </div>
+                        </div>
+
+                        <div class="bg-indigo-950/40 rounded-lg p-3 text-[11px] text-slate-300 border border-indigo-900/40">
+                          💡 <strong>Estimated ROI:</strong> Save roughly 25% on recruitment costs by unlocking latent talent already on your payroll!
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tier columns -->
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Starter Column -->
+                <div class="bg-slate-950/60 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between">
+                  <div>
+                    <h4 class="font-bold text-lg text-slate-200 mb-2">Starter Package</h4>
+                    <p class="text-xs text-slate-400 mb-6">Excellent for developing businesses seeking automated corporate directories.</p>
+                    <div class="text-2xl font-black text-slate-100 mb-6">$2 <span class="text-xs text-slate-400 font-normal">/ employee / month</span></div>
+                    
+                    <ul class="space-y-3 text-xs text-slate-300 mb-8">
+                      <li class="flex items-center gap-2">
+                        <i data-lucide="check" class="w-4 h-4 text-indigo-400"></i> Active Employee Directories
+                      </li>
+                      <li class="flex items-center gap-2">
+                        <i data-lucide="check" class="w-4 h-4 text-indigo-400"></i> Standard Org Directory
+                      </li>
+                      <li class="flex items-center gap-2 font-semibold text-slate-500">
+                        ✕ Advanced AI Networking
+                      </li>
+                      <li class="flex items-center gap-2 font-semibold text-slate-500">
+                        ✕ Social Clubs & Calendars
+                      </li>
+                    </ul>
+                  </div>
+                  <button @click="currentTab = 'demo'; demoTab = 'dashboard';" class="w-full py-3 bg-slate-900 hover:bg-slate-800 rounded-xl font-bold text-xs border border-slate-800 transition-colors">
+                    Try Sandbox Demo
+                  </button>
+                </div>
+
+                <!-- Professional Column -->
+                <div class="bg-slate-950/80 border-2 border-indigo-500/70 rounded-2xl p-6 flex flex-col justify-between relative shadow-xl shadow-indigo-500/5">
+                  <div class="absolute top-0 right-6 transform -translate-y-1/2 bg-indigo-500 text-white text-[10px] uppercase font-extrabold tracking-wider px-3 py-1 rounded-full">
+                    Highly Popular
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-lg text-indigo-300 mb-2">Professional</h4>
+                    <p class="text-xs text-slate-400 mb-6">Equip larger organizations with community building and AI searching.</p>
+                    <div class="text-2xl font-black text-slate-100 mb-6">$5 <span class="text-xs text-slate-400 font-normal">/ employee / month</span></div>
+                    
+                    <ul class="space-y-3 text-xs text-slate-300 mb-8">
+                      <li class="flex items-center gap-2">
+                        <i data-lucide="check" class="w-4 h-4 text-indigo-400"></i> Active Employee Directories
+                      </li>
+                      <li class="flex items-center gap-2">
+                        <i data-lucide="check" class="w-4 h-4 text-indigo-400"></i> Interactive Org Directory
+                      </li>
+                      <li class="flex items-center gap-2">
+                        <i data-lucide="check" class="w-4 h-4 text-indigo-400"></i> AI Teammate Recommendations
+                      </li>
+                      <li class="flex items-center gap-2">
+                        <i data-lucide="check" class="w-4 h-4 text-indigo-400"></i> Social Clubs & Mutual Match
+                      </li>
+                    </ul>
+                  </div>
+                  <button @click="currentTab = 'demo'; demoTab = 'dashboard';" class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold text-xs shadow-lg shadow-indigo-600/20 transition-all">
+                    Try Sandbox Demo
+                  </button>
+                </div>
+
+                <!-- Enterprise Column -->
+                <div class="bg-slate-950/60 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between">
+                  <div>
+                    <h4 class="font-bold text-lg text-slate-200 mb-2">Enterprise Plus</h4>
+                    <p class="text-xs text-slate-400 mb-6">Fully custom compliance layers, audit streams, and direct ERP endpoints.</p>
+                    <div class="text-2xl font-black text-slate-100 mb-6">$8 <span class="text-xs text-slate-400 font-normal">/ employee / month</span></div>
+                    
+                    <ul class="space-y-3 text-xs text-slate-300 mb-8">
+                      <li class="flex items-center gap-2">
+                        <i data-lucide="check" class="w-4 h-4 text-indigo-400"></i> All Professional Features
+                      </li>
+                      <li class="flex items-center gap-2">
+                        <i data-lucide="check" class="w-4 h-4 text-indigo-400"></i> Dedicated HR Audit logs
+                      </li>
+                      <li class="flex items-center gap-2">
+                        <i data-lucide="check" class="w-4 h-4 text-indigo-400"></i> Custom Compliance Guardrails
+                      </li>
+                      <li class="flex items-center gap-2">
+                        <i data-lucide="check" class="w-4 h-4 text-indigo-400"></i> 1-on-1 Dedicated Support
+                      </li>
+                    </ul>
+                  </div>
+                  <button @click="currentTab = 'demo'; demoTab = 'dashboard';" class="w-full py-3 bg-slate-900 hover:bg-slate-800 rounded-xl font-bold text-xs border border-slate-800 transition-colors">
+                    Try Sandbox Demo
+                  </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA footer -->
+        <footer class="bg-slate-950 py-16 px-4 lg:px-8 border-t border-slate-800 text-center">
+            <div class="max-w-4xl mx-auto">
+              <h2 class="text-3xl font-extrabold tracking-tight mb-4">Ready to Transform Your Workplace Connectivity?</h2>
+              <p class="text-slate-400 max-w-xl mx-auto mb-8 text-sm">Experience the dashboard, search talent fields, view organizational hierarchies, and check dating matchmaking settings inside our real-time sandbox simulation.</p>
+              <button 
+                @click="currentTab = 'demo'; demoTab = 'dashboard'; window.scrollTo({ top: 0, behavior: 'smooth' });"
+                class="px-8 py-4 bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-600 hover:to-violet-700 text-white rounded-xl font-bold text-base shadow-xl transition-all inline-flex items-center gap-2"
+              >
+                Launch Sandbox Live Application <i data-lucide="sparkles" class="w-5 h-5"></i>
+              </button>
+              <div class="text-slate-500 text-xs mt-12">
+                © <span x-text="new Date().getFullYear()"></span> PulseConnect Network. All rights reserved. Built for secure organizational communication.
+              </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TAB 2: LIVE APP DEMO SANDBOX               -->
+    <!-- ========================================== -->
+    <div x-show="currentTab === 'demo'" class="animate-fadeIn max-w-7xl mx-auto px-4 lg:px-8 py-8" x-cloak>
+        
+        <!-- App Top Header Card -->
+        <div class="bg-gradient-to-r from-indigo-950/80 to-slate-900 border border-indigo-800/40 rounded-2xl p-5 mb-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+              <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-indigo-900 text-[10px] font-bold text-indigo-200 uppercase tracking-widest mb-1.5">
+                Live Interactive Sandbox
+              </div>
+              <h2 class="text-xl font-bold text-slate-100 flex items-center gap-2">
+                PulseConnect Portal <span class="text-xs font-normal text-slate-400">(Testing Sandbox)</span>
+              </h2>
+              <p class="text-xs text-slate-300">Interact with features like the skills database, mutual connections, AI engine, and interactive org chart.</p>
+            </div>
+            
+            <button 
+              @click="currentTab = 'landing'; window.scrollTo({ top: 0, behavior: 'smooth' });"
+              class="text-xs bg-slate-800 hover:bg-slate-700 text-indigo-300 font-bold px-4 py-2 rounded-xl transition-colors shrink-0 border border-slate-700/80"
+            >
+              ← Back to Sales Page
+            </button>
+        </div>
+
+        <!-- App Grid Layout -->
+        <div class="grid lg:grid-cols-12 gap-8">
+            
+            <!-- Side Navigation Links -->
+            <div class="lg:col-span-3 space-y-2">
+                <div class="text-[10px] uppercase font-bold text-slate-500 tracking-wider px-3 mb-2">Professional Layer</div>
+                
+                <button 
+                  @click="demoTab = 'dashboard'" 
+                  :class="demoTab === 'dashboard' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/10' : 'bg-slate-950/40 hover:bg-slate-800 text-slate-300'"
+                  class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm text-left transition-all"
+                >
+                  <i data-lucide="compass" class="w-4 h-4"></i> Team Dashboard
+                </button>
+
+                <button 
+                  @click="demoTab = 'directory'" 
+                  :class="demoTab === 'directory' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/10' : 'bg-slate-950/40 hover:bg-slate-800 text-slate-300'"
+                  class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm text-left transition-all"
+                >
+                  <i data-lucide="users" class="w-4 h-4"></i> Employee Directory
+                </button>
+
+                <button 
+                  @click="demoTab = 'org'" 
+                  :class="demoTab === 'org' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/10' : 'bg-slate-950/40 hover:bg-slate-800 text-slate-300'"
+                  class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm text-left transition-all"
+                >
+                  <i data-lucide="network" class="w-4 h-4"></i> Interactive Org Tree
+                </button>
+
+                <button 
+                  @click="demoTab = 'projects'" 
+                  :class="demoTab === 'projects' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/10' : 'bg-slate-950/40 hover:bg-slate-800 text-slate-300'"
+                  class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm text-left transition-all"
+                >
+                  <i data-lucide="layers" class="w-4 h-4"></i> Project Stakeholders
+                </button>
+
+                <div class="pt-4 text-[10px] uppercase font-bold text-slate-500 tracking-wider px-3 mb-2">Social & Community</div>
+
+                <button 
+                  @click="demoTab = 'clubs'" 
+                  :class="demoTab === 'clubs' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/10' : 'bg-slate-950/40 hover:bg-slate-800 text-slate-300'"
+                  class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm text-left transition-all"
+                >
+                  <i data-lucide="user-square-2" class="w-4 h-4"></i> Shared Hobby Clubs
+                </button>
+
+                <div class="pt-4 text-[10px] uppercase font-bold text-slate-500 tracking-wider px-3 mb-2">Security Controlled Layer</div>
+
+                <button 
+                  @click="demoTab = 'relationship'" 
+                  :class="demoTab === 'relationship' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/10' : 'bg-slate-950/40 hover:bg-slate-800 text-slate-300'"
+                  class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm text-left transition-all relative"
+                >
+                  <i data-lucide="heart" class="w-4 h-4 text-rose-400"></i> Connecting Deck
+                  <span class="absolute right-3 bg-rose-500 text-white text-[9px] font-black px-1.5 py-0.5 rounded-full uppercase">Opt-In</span>
+                </button>
+
+                <div class="pt-4 text-[10px] uppercase font-bold text-slate-500 tracking-wider px-3 mb-2">Enterprise Core AI</div>
+
+                <button 
+                  @click="demoTab = 'ai'" 
+                  :class="demoTab === 'ai' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/10' : 'bg-slate-950/40 hover:bg-slate-800 text-slate-300'"
+                  class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm text-left transition-all"
+                >
+                  <i data-lucide="sparkles" class="w-4 h-4 text-indigo-400"></i> AI Teammate Search
+                </button>
+            </div>
+
+            <!-- Active App Canvas Screens -->
+            <div class="lg:col-span-9 bg-slate-950/70 border border-slate-800 rounded-2xl p-6 min-h-[600px] shadow-2xl relative">
+                
+                <!-- SCREEN 1: DASHBOARD -->
+                <div x-show="demoTab === 'dashboard'" class="space-y-6 animate-fadeIn">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-800 pb-4">
+                      <div>
+                        <h3 class="text-2xl font-bold text-slate-100">Welcome back, Sarah! 👋</h3>
+                        <p class="text-xs text-slate-400">Chief Executive Officer • Administrative Headquarters</p>
+                      </div>
+                      <div class="bg-slate-900 border border-slate-800 px-4 py-2 rounded-xl text-right">
+                        <span class="text-[11px] font-bold text-indigo-400 block">PulseConnect Status</span>
+                        <span class="text-xs font-semibold text-slate-200">Open to Professional Mentorship</span>
+                      </div>
+                    </div>
+
+                    <!-- Grid stat indicators -->
+                    <div class="grid sm:grid-cols-3 gap-4">
+                      <div class="bg-slate-900/50 border border-slate-800/80 p-4 rounded-xl">
+                        <div class="text-slate-400 text-xs font-semibold mb-1">Today's Schedule</div>
+                        <div class="text-base font-bold text-slate-100">4 Synced Projects</div>
+                        <p class="text-[10px] text-slate-500 mt-1">Next: Alpha Sync @ 2:30 PM</p>
+                      </div>
+                      <div class="bg-slate-900/50 border border-slate-800/80 p-4 rounded-xl">
+                        <div class="text-slate-400 text-xs font-semibold mb-1">Hobby Engagements</div>
+                        <div class="text-base font-bold text-indigo-300" x-text="subscribedClubs.length + ' Active Clubs'"></div>
+                        <p class="text-[10px] text-slate-500 mt-1">Gaming, Photography</p>
+                      </div>
+                      <div class="bg-slate-900/50 border border-slate-800/80 p-4 rounded-xl">
+                        <div class="text-slate-400 text-xs font-semibold mb-1">Connection Deck</div>
+                        <div class="text-base font-bold text-emerald-400" x-text="mutualMatches.length + ' Mutual Fits'"></div>
+                        <p class="text-[10px] text-slate-500 mt-1">Aisha Rahman & Chloe Chevalier</p>
+                      </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-12 gap-6">
+                      <!-- Milestone Celebrations -->
+                      <div class="md:col-span-7 bg-slate-900/40 border border-slate-800/60 p-5 rounded-xl space-y-4">
+                        <h4 class="font-extrabold text-sm border-b border-slate-800 pb-2 text-slate-300">Teammate Celebrations & Milestones</h4>
+                        
+                        <div class="flex items-center gap-3.5 p-2 bg-indigo-950/20 rounded-lg border border-indigo-900/30">
+                          <div class="text-xl">🎂</div>
+                          <div>
+                            <div class="text-xs font-bold text-slate-200">Rutvik Warkar</div>
+                            <div class="text-[10px] text-indigo-300">Celebrating 2 years in Product Development tomorrow!</div>
+                          </div>
+                        </div>
+
+                        <div class="flex items-center gap-3.5 p-2 bg-slate-950/50 rounded-lg border border-slate-800">
+                          <div class="text-xl">🎓</div>
+                          <div>
+                            <div class="text-xs font-bold text-slate-200">Elena Rostova</div>
+                            <div class="text-[10px] text-slate-400">Passed Social Media Analytics Master Certification</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Quick networking suggestions -->
+                      <div class="md:col-span-5 bg-slate-900/40 border border-slate-800/60 p-5 rounded-xl flex flex-col justify-between">
+                        <div>
+                          <h4 class="font-extrabold text-sm border-b border-slate-800 pb-2 text-slate-300">Suggested Networking</h4>
+                          
+                          <div class="mt-4 flex items-center gap-3">
+                            <img 
+                              src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=150" 
+                              alt="Rutvik" 
+                              class="w-12 h-12 rounded-full object-cover"
+                            >
+                            <div>
+                              <h5 class="text-xs font-bold text-slate-200">Rutvik Warkar</h5>
+                              <p class="text-[10px] text-slate-400">Product Manager • Austin, TX</p>
+                            </div>
+                          </div>
+                          <p class="text-[11px] text-slate-400 mt-3 leading-relaxed">
+                            Rutvik is also working on <strong class="text-indigo-300">Project Alpha</strong> and shares your hobby interest in <strong class="text-indigo-300">Photography</strong>!
+                          </p>
+                        </div>
+                        
+                        <button 
+                          @click="demoTab = 'ai'; aiPrompt = 'Who loves photography?'; runMockSearch();"
+                          class="w-full mt-4 py-2 bg-indigo-600/30 hover:bg-indigo-600/50 text-indigo-300 border border-indigo-500/30 text-xs font-bold rounded-xl transition-colors"
+                        >
+                          Initiate Coffee Chat Invitation
+                        </button>
+                      </div>
+                    </div>
+                </div>
+
+                <!-- SCREEN 2: DIRECTORY -->
+                <div x-show="demoTab === 'directory'" class="space-y-6 animate-fadeIn" x-cloak>
+                    <div>
+                      <h3 class="text-2xl font-bold text-slate-100">Company Connectivity Directory</h3>
+                      <p class="text-xs text-slate-400">Search by Name, Skill, Location, or Interest Tag</p>
+                    </div>
+
+                    <!-- Search Filter Box -->
+                    <div class="grid sm:grid-cols-12 gap-3.5 bg-slate-900 p-4 rounded-xl border border-slate-800">
+                      <div class="sm:col-span-5 relative">
+                        <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500"></i>
+                        <input 
+                          type="text" 
+                          placeholder="Search tags, e.g. 'Silicone', 'Gaming', 'Figma'..." 
+                          x-model="searchQuery"
+                          class="w-full pl-9 pr-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-100 focus:outline-none focus:border-indigo-500"
+                        >
+                      </div>
+
+                      <div class="sm:col-span-4 flex gap-2">
+                        <i data-lucide="filter" class="w-4 h-4 text-slate-500 mt-2.5 shrink-0"></i>
+                        <select 
+                          x-model="selectedDept"
+                          class="w-full bg-slate-950 border border-slate-800 rounded-xl text-xs px-2.5 py-2 text-slate-300 focus:outline-none"
+                        >
+                          <option value="All">All Departments</option>
+                          <option value="Executive">Executive</option>
+                          <option value="Marketing">Marketing</option>
+                          <option value="Product Management">Product Management</option>
+                          <option value="Engineering">Engineering</option>
+                        </select>
+                      </div>
+
+                      <div class="sm:col-span-3">
+                        <select 
+                          x-model="selectedStatus"
+                          class="w-full bg-slate-950 border border-slate-800 rounded-xl text-xs px-2.5 py-2 text-slate-300 focus:outline-none"
+                        >
+                          <option value="All">All Connections</option>
+                          <option value="Open to Networking">Open to Networking</option>
+                          <option value="Open to Friendship">Open to Friendship</option>
+                          <option value="Open to Dating">Open to Dating</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <!-- Dynamic Card Grid -->
+                    <div class="grid md:grid-cols-2 gap-4">
+                      <template x-for="emp in filteredEmployees()" :key="emp.id">
+                        <div class="bg-slate-900/60 border border-slate-800/80 p-5 rounded-2xl relative flex flex-col justify-between hover:border-indigo-500/40 transition-all">
+                          <div>
+                            <div class="flex items-start gap-3.5">
+                              <img 
+                                :src="emp.avatar" 
+                                :alt="emp.name" 
+                                class="w-14 h-14 rounded-full object-cover ring-2 ring-indigo-500/30"
+                              >
+                              <div class="flex-1 min-w-0">
+                                <div class="flex items-center justify-between gap-1.5">
+                                  <h4 class="font-extrabold text-sm text-slate-100 truncate" x-text="emp.name"></h4>
+                                  <span 
+                                    :class="emp.status === 'Open to Dating' ? 'bg-rose-950/40 border-rose-800 text-rose-300' : emp.status === 'Open to Friendship' ? 'bg-amber-950/40 border-amber-800 text-amber-300' : 'bg-indigo-950/40 border-indigo-800 text-indigo-300'"
+                                    class="text-[9px] uppercase font-bold shrink-0 px-1.5 py-0.5 rounded border"
+                                    x-text="emp.status.replace('Open to ', '')"
+                                  ></span>
+                                </div>
+                                <p class="text-[11px] text-indigo-400 font-semibold truncate" x-text="emp.role"></p>
+                                <p class="text-[10px] text-slate-400 flex items-center gap-1 mt-0.5">
+                                  <i data-lucide="map-pin" class="w-2.5 h-2.5"></i> <span x-text="emp.location"></span>
+                                </p>
+                              </div>
+                            </div>
+
+                            <!-- Skills -->
+                            <div class="mt-4">
+                              <span class="text-[10px] uppercase font-bold text-slate-500 tracking-wider block mb-1.5">Expertise Tags</span>
+                              <div class="flex flex-wrap gap-1">
+                                <template x-for="skill in emp.skills">
+                                    <span class="text-[10px] px-2 py-0.5 bg-slate-950 border border-slate-800/60 rounded text-slate-300" x-text="skill"></span>
+                                </template>
+                              </div>
+                            </div>
+
+                            <!-- Interests -->
+                            <div class="mt-4">
+                              <span class="text-[10px] uppercase font-bold text-slate-500 tracking-wider block mb-1.5">Interests & Hobbies</span>
+                              <div class="flex flex-wrap gap-1">
+                                <template x-for="interest in emp.interests">
+                                    <span class="text-[10px] px-2 py-0.5 bg-indigo-950/30 border border-indigo-900/30 rounded text-indigo-300 font-medium" x-text="interest"></span>
+                                </template>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs">
+                            <span class="text-slate-500 font-medium">Reports To: <strong class="text-slate-300" x-text="getManagerName(emp.reportsTo)"></strong></span>
+                            
+                            <button 
+                              @click="demoTab = 'ai'; aiPrompt = 'Provide details on ' + emp.name + '\'s current assignments'; runMockSearch();" 
+                              class="text-xs text-indigo-400 font-bold hover:underline flex items-center gap-1"
+                            >
+                              Ask AI Teammate Info <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </template>
+                    </div>
+                </div>
+
+                <!-- SCREEN 3: ORG TREE -->
+                <div x-show="demoTab === 'org'" class="space-y-6 animate-fadeIn" x-cloak>
+                    <div>
+                      <h3 class="text-2xl font-bold text-slate-100">Dynamic Hierarchy Explorer</h3>
+                      <p class="text-xs text-slate-400">Click elements to highlight reporting layers and professional coordinates.</p>
+                    </div>
+
+                    <!-- Visual Node Hierarchy Map -->
+                    <div class="flex flex-col items-center">
+                      <!-- CEO Node -->
+                      <div class="bg-gradient-to-r from-indigo-900 to-indigo-950 border-2 border-indigo-500 rounded-2xl p-4 w-64 text-center shadow-lg">
+                        <img 
+                          src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=150" 
+                          alt="CEO" 
+                          class="w-12 h-12 rounded-full mx-auto object-cover border border-indigo-400"
+                        >
+                        <h4 class="font-extrabold text-sm text-slate-100 mt-2">Sarah Jenkins</h4>
+                        <p class="text-xs text-indigo-300">Chief Executive Officer</p>
+                        <div class="mt-2 text-[10px] py-0.5 px-2 bg-indigo-950 border border-indigo-800 text-indigo-300 rounded inline-block font-semibold">
+                          Reports: Board of Directors
+                        </div>
+                      </div>
+
+                      <div class="h-8 w-0.5 bg-slate-700 my-1"></div>
+
+                      <!-- Sub Columns -->
+                      <div class="grid md:grid-cols-2 gap-12 relative w-full max-w-2xl">
+                        
+                        <!-- Marketing Column -->
+                        <div class="flex flex-col items-center">
+                          <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 w-56 text-center">
+                            <img 
+                              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150" 
+                              alt="Marcus Chen" 
+                              class="w-10 h-10 rounded-full mx-auto object-cover"
+                            >
+                            <h5 class="font-bold text-xs text-slate-100 mt-2">Marcus Chen</h5>
+                            <p class="text-[11px] text-slate-400">Marketing Director</p>
+                            <span class="text-[9px] block text-indigo-400 font-semibold">Reports To: CEO</span>
+                          </div>
+
+                          <div class="h-6 w-0.5 bg-slate-800"></div>
+
+                          <!-- Marketing Reports nested -->
+                          <div class="space-y-3 w-48">
+                            <div class="bg-slate-950 border border-slate-800 p-2.5 rounded-lg text-center text-[11px]">
+                              <h6 class="font-bold text-slate-200">Chloe Chevalier</h6>
+                              <p class="text-slate-500">Marketing Manager</p>
+                              <div class="h-3 w-0.5 bg-slate-800 mx-auto my-1"></div>
+                              <div class="bg-slate-900 border border-slate-800 p-1.5 rounded">
+                                <span class="font-semibold text-[10px] text-slate-300">Elena Rostova</span>
+                                <p class="text-[9px] text-slate-500">Marketing Executive</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Product Columns -->
+                        <div class="flex flex-col items-center">
+                          <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 w-56 text-center ring-2 ring-indigo-500/20">
+                            <img 
+                              src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=150" 
+                              alt="Rutvik" 
+                              class="w-10 h-10 rounded-full mx-auto object-cover"
+                            >
+                            <h5 class="font-bold text-xs text-slate-100 mt-2">Rutvik Warkar</h5>
+                            <p class="text-[11px] text-slate-400">Product Manager</p>
+                            <span class="text-[9px] block text-indigo-400 font-semibold">Reports To: CEO</span>
+                          </div>
+
+                          <div class="h-6 w-0.5 bg-slate-800"></div>
+
+                          <!-- Sub elements under Product -->
+                          <div class="space-y-2 w-48">
+                            <div class="bg-slate-950 border border-slate-800 p-2.5 rounded-lg text-center text-[11px]">
+                              <h6 class="font-bold text-slate-200">Aisha Rahman</h6>
+                              <p class="text-slate-500">Lead UI/UX Designer</p>
+                            </div>
+                            
+                            <div class="bg-slate-950 border border-slate-800 p-2.5 rounded-lg text-center text-[11px]">
+                              <h6 class="font-bold text-slate-200">David Kim</h6>
+                              <p class="text-slate-500">Senior Software Engineer</p>
+                            </div>
+
+                            <div class="bg-slate-950 border border-slate-800 p-2.5 rounded-lg text-center text-[11px]">
+                              <h6 class="font-bold text-slate-200">Rajesh Patel</h6>
+                              <p class="text-slate-500">Data Scientist</p>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                </div>
+
+                <!-- SCREEN 4: PROJECTS -->
+                <div x-show="demoTab === 'projects'" class="space-y-6 animate-fadeIn" x-cloak>
+                    <div>
+                      <h3 class="text-2xl font-bold text-slate-100">Cross-Functional Projects Map</h3>
+                      <p class="text-xs text-slate-400">Identify cross-functional members working within key strategic programs.</p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                      <!-- Project Alpha -->
+                      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5">
+                        <div class="flex justify-between items-center mb-4 border-b border-slate-800 pb-3">
+                          <div>
+                            <h4 class="font-extrabold text-sm text-slate-100">Project Alpha</h4>
+                            <p class="text-[11px] text-indigo-400">NextGen Silicone Tech Platform</p>
+                          </div>
+                          <span class="text-[10px] px-2.5 py-1 bg-indigo-950 text-indigo-300 font-bold rounded">Active Sprint</span>
+                        </div>
+
+                        <p class="text-xs text-slate-400 mb-4 leading-relaxed">
+                          Project Alpha focuses on deploying deep silicone structural calculations directly into our CRM workflows to accelerate client delivery cycles.
+                        </p>
+
+                        <div class="space-y-2">
+                          <span class="text-[10px] uppercase font-bold text-slate-500 tracking-wider block">Assigned Stakeholders</span>
+                          
+                          <template x-for="emp in employees.filter(e => e.projects.includes('Project Alpha'))">
+                            <div class="flex items-center justify-between p-2 bg-slate-950/60 rounded-xl border border-slate-800 text-xs">
+                              <div class="flex items-center gap-2">
+                                <img :src="emp.avatar" class="w-8 h-8 rounded-full object-cover">
+                                <div>
+                                  <span class="font-bold block text-slate-200" x-text="emp.name"></span>
+                                  <span class="text-[9px] text-slate-500" x-text="emp.role"></span>
+                                </div>
+                              </div>
+                              <span class="text-[9px] text-indigo-400 font-semibold" x-text="emp.department"></span>
+                            </div>
+                          </template>
+                        </div>
+                      </div>
+
+                      <!-- Campaign Horizon -->
+                      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5">
+                        <div class="flex justify-between items-center mb-4 border-b border-slate-800 pb-3">
+                          <div>
+                            <h4 class="font-extrabold text-sm text-slate-100">Campaign Horizon</h4>
+                            <p class="text-[11px] text-indigo-400">Corporate Global Brand Repositioning</p>
+                          </div>
+                          <span class="text-[10px] px-2.5 py-1 bg-amber-950 text-amber-300 font-bold rounded">Planning Stage</span>
+                        </div>
+
+                        <p class="text-xs text-slate-400 mb-4 leading-relaxed">
+                          Campaign Horizon aligns content calendars, brand design structures, and public sponsorships to match modern climate and corporate sustainability goals.
+                        </p>
+
+                        <div class="space-y-2">
+                          <span class="text-[10px] uppercase font-bold text-slate-500 tracking-wider block">Assigned Stakeholders</span>
+                          
+                          <template x-for="emp in employees.filter(e => e.projects.includes('Campaign Horizon'))">
+                            <div class="flex items-center justify-between p-2 bg-slate-950/60 rounded-xl border border-slate-800 text-xs">
+                              <div class="flex items-center gap-2">
+                                <img :src="emp.avatar" class="w-8 h-8 rounded-full object-cover">
+                                <div>
+                                  <span class="font-bold block text-slate-200" x-text="emp.name"></span>
+                                  <span class="text-[9px] text-slate-500" x-text="emp.role"></span>
+                                </div>
+                              </div>
+                              <span class="text-[9px] text-indigo-400 font-semibold" x-text="emp.department"></span>
+                            </div>
+                          </template>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+
+                <!-- SCREEN 5: CLUBS -->
+                <div x-show="demoTab === 'clubs'" class="space-y-6 animate-fadeIn" x-cloak>
+                    <div>
+                      <h3 class="text-2xl font-bold text-slate-100">Cross-Departmental Interest Groups</h3>
+                      <p class="text-xs text-slate-400">Bridging gaps between finance, tech, and creative hubs via everyday hobbies.</p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                      <!-- Gaming Club -->
+                      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between">
+                        <div>
+                          <div class="flex justify-between items-start mb-3">
+                            <h4 class="font-extrabold text-sm text-slate-100">Gaming Community 🎮</h4>
+                            <span class="text-[10px] text-slate-400 font-semibold">4 Members</span>
+                          </div>
+                          <p class="text-xs text-slate-400 mb-4 leading-relaxed">
+                            Weekly casual setups, competitive strategy, LAN tournaments, and gaming hardware talk.
+                          </p>
+                          
+                          <div class="space-y-1.5 mb-6">
+                            <span class="text-[9px] uppercase font-bold text-slate-500 block">Active Employees:</span>
+                            <div class="flex gap-1.5">
+                              <template x-for="emp in employees.filter(e => e.interests.includes('Gaming'))">
+                                <img :src="emp.avatar" :title="emp.name" class="w-7 h-7 rounded-full object-cover border border-slate-800">
+                              </template>
+                            </div>
+                          </div>
+                        </div>
+
+                        <button 
+                          @click="toggleClubSubscription('Gaming Community')"
+                          :class="subscribedClubs.includes('Gaming Community') ? 'bg-red-950/40 text-red-400 border border-red-900/30' : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg'"
+                          class="w-full py-2.5 rounded-xl font-bold text-xs transition-colors"
+                        >
+                          <span x-text="subscribedClubs.includes('Gaming Community') ? 'Leave Club' : 'Join Gaming Club'"></span>
+                        </button>
+                      </div>
+
+                      <!-- Photography Club -->
+                      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between">
+                        <div>
+                          <div class="flex justify-between items-start mb-3">
+                            <h4 class="font-extrabold text-sm text-slate-100">Photography Club 📷</h4>
+                            <span class="text-[10px] text-slate-400 font-semibold">3 Members</span>
+                          </div>
+                          <p class="text-xs text-slate-400 mb-4 leading-relaxed">
+                            Monthly visual assignments, portfolio feedback, and regional weekend photo excursions.
+                          </p>
+
+                          <div class="space-y-1.5 mb-6">
+                            <span class="text-[9px] uppercase font-bold text-slate-500 block">Active Employees:</span>
+                            <div class="flex gap-1.5">
+                              <template x-for="emp in employees.filter(e => e.interests.includes('Photography'))">
+                                <img :src="emp.avatar" :title="emp.name" class="w-7 h-7 rounded-full object-cover border border-slate-800">
+                              </template>
+                            </div>
+                          </div>
+                        </div>
+
+                        <button 
+                          @click="toggleClubSubscription('Photography Club')"
+                          :class="subscribedClubs.includes('Photography Club') ? 'bg-red-950/40 text-red-400 border border-red-900/30' : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg'"
+                          class="w-full py-2.5 rounded-xl font-bold text-xs transition-colors"
+                        >
+                          <span x-text="subscribedClubs.includes('Photography Club') ? 'Leave Club' : 'Join Photography Club'"></span>
+                        </button>
+                      </div>
+
+                      <!-- Cricket Group -->
+                      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between">
+                        <div>
+                          <div class="flex justify-between items-start mb-3">
+                            <h4 class="font-extrabold text-sm text-slate-100">Cricket Group 🏏</h4>
+                            <span class="text-[10px] text-slate-400 font-semibold">2 Members</span>
+                          </div>
+                          <p class="text-xs text-slate-400 mb-4 leading-relaxed">
+                            Weekend matches, net practices, and viewing parties for international cricket events.
+                          </p>
+
+                          <div class="space-y-1.5 mb-6">
+                            <span class="text-[9px] uppercase font-bold text-slate-500 block">Active Employees:</span>
+                            <div class="flex gap-1.5">
+                              <template x-for="emp in employees.filter(e => e.interests.includes('Cricket'))">
+                                <img :src="emp.avatar" :title="emp.name" class="w-7 h-7 rounded-full object-cover border border-slate-800">
+                              </template>
+                            </div>
+                          </div>
+                        </div>
+
+                        <button 
+                          @click="toggleClubSubscription('Cricket Group')"
+                          :class="subscribedClubs.includes('Cricket Group') ? 'bg-red-950/40 text-red-400 border border-red-900/30' : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg'"
+                          class="w-full py-2.5 rounded-xl font-bold text-xs transition-colors"
+                        >
+                          <span x-text="subscribedClubs.includes('Cricket Group') ? 'Leave Club' : 'Join Cricket Club'"></span>
+                        </button>
+                      </div>
+
+                      <!-- Fitness Club -->
+                      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between">
+                        <div>
+                          <div class="flex justify-between items-start mb-3">
+                            <h4 class="font-extrabold text-sm text-slate-100">Fitness Club 🏋️</h4>
+                            <span class="text-[10px] text-slate-400 font-semibold">2 Members</span>
+                          </div>
+                          <p class="text-xs text-slate-400 mb-4 leading-relaxed">
+                            Group weightlifting sessions, nutritional guide share, and running routines.
+                          </p>
+
+                          <div class="space-y-1.5 mb-6">
+                            <span class="text-[9px] uppercase font-bold text-slate-500 block">Active Employees:</span>
+                            <div class="flex gap-1.5">
+                              <template x-for="emp in employees.filter(e => e.interests.includes('Fitness'))">
+                                <img :src="emp.avatar" :title="emp.name" class="w-7 h-7 rounded-full object-cover border border-slate-800">
+                              </template>
+                            </div>
+                          </div>
+                        </div>
+
+                        <button 
+                          @click="toggleClubSubscription('Fitness Club')"
+                          :class="subscribedClubs.includes('Fitness Club') ? 'bg-red-950/40 text-red-400 border border-red-900/30' : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg'"
+                          class="w-full py-2.5 rounded-xl font-bold text-xs transition-colors"
+                        >
+                          <span x-text="subscribedClubs.includes('Fitness Club') ? 'Leave Club' : 'Join Fitness Club'"></span>
+                        </button>
+                      </div>
+                    </div>
+                </div>
+
+                <!-- SCREEN 6: CONNECTING DECK -->
+                <div x-show="demoTab === 'relationship'" class="space-y-6 animate-fadeIn" x-cloak>
+                    <!-- Admin Guard Switch Panel -->
+                    <div class="p-4 bg-slate-900 border border-slate-800 rounded-2xl">
+                      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        <div class="flex items-center gap-3">
+                          <div class="p-2 bg-indigo-950/80 rounded-xl text-indigo-400 border border-indigo-800/40">
+                            <i data-lucide="shield-check" class="w-5 h-5 text-indigo-400"></i>
+                          </div>
+                          <div>
+                            <h4 class="font-extrabold text-sm text-slate-200">HR Compliance Settings</h4>
+                            <p class="text-[11px] text-slate-400">Sandbox Control: Toggle visual display settings global rules.</p>
+                          </div>
+                        </div>
+
+                        <button
+                          @click="globalDatingEnabled = !globalDatingEnabled"
+                          :class="globalDatingEnabled ? 'bg-emerald-950/60 border border-emerald-800 text-emerald-300' : 'bg-red-950/60 border border-red-800 text-red-300'"
+                          class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5"
+                        >
+                          <span x-text="globalDatingEnabled ? 'Global Relationship Active' : 'Relationship Layer Disabled'"></span>
+                        </button>
+                      </div>
+                    </div>
+
+                    <template x-if="!globalDatingEnabled">
+                      <div class="bg-slate-900/40 border border-slate-800 p-8 rounded-2xl text-center space-y-4">
+                        <i data-lucide="alert-triangle" class="w-12 h-12 text-slate-500 mx-auto"></i>
+                        <h4 class="font-extrabold text-lg">Discovery Layer Off</h4>
+                        <p class="text-xs text-slate-400 max-w-lg mx-auto">
+                          Your Employer HR Administrator has turned off relationship dating options. Only professional mentoring and direct work networks are visible under this organization rule set.
+                        </p>
+                      </div>
+                    </template>
+
+                    <template x-if="globalDatingEnabled">
+                      <div class="space-y-6">
+                        <!-- User preference block -->
+                        <div class="bg-slate-900/50 border border-indigo-900/30 p-5 rounded-2xl">
+                          <h4 class="font-extrabold text-sm mb-2 text-indigo-300">Your Voluntary Connectivity Level</h4>
+                          <p class="text-xs text-slate-400 mb-4 leading-relaxed">
+                            Your choice is completely private. You are ONLY matched with people who share the same status preference.
+                          </p>
+
+                          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                            <template x-for="opt in [
+                              { val: 'none', label: 'Not Interested', desc: 'Preserves traditional system configs' },
+                              { val: 'friendship', label: 'Friendship Only', desc: 'Discover buddies with shared hobbies' },
+                              { val: 'networking', label: 'Networking Only', desc: 'Identify skill sharing candidates' },
+                              { val: 'dating', label: 'Dating Opt-In', desc: 'Confidential social connection' },
+                            ]">
+                              <button
+                                @click="datingOptIn = opt.val; currentSwipeIndex = 0;"
+                                :class="datingOptIn === opt.val ? 'bg-indigo-600/20 border-indigo-500 text-indigo-300 shadow' : 'bg-slate-950 border-slate-800 text-slate-400 hover:bg-slate-900'"
+                                class="p-3 rounded-xl border text-left transition-all"
+                              >
+                                <span class="font-bold text-xs block text-slate-200" x-text="opt.label"></span>
+                                <span class="text-[9px] text-slate-500 mt-1 block leading-tight" x-text="opt.desc"></span>
+                              </button>
+                            </template>
+                          </div>
+                        </div>
+
+                        <!-- Main workspace split -->
+                        <div x-show="datingOptIn !== 'none'" class="grid md:grid-cols-12 gap-6">
+                            
+                            <!-- Swiper slide -->
+                            <div class="md:col-span-7 bg-slate-900/40 border border-slate-800 p-5 rounded-2xl">
+                              <h5 class="font-extrabold text-xs text-slate-400 uppercase tracking-widest mb-4">Colleague Discovery Deck</h5>
+                              
+                              <div x-data="{ pool: [] }" x-effect="pool = getSwipePool()">
+                                <template x-if="currentSwipeIndex < pool.length">
+                                  <div class="space-y-4">
+                                      <div class="bg-slate-950 p-4 rounded-xl border border-slate-800/80">
+                                        <img 
+                                          :src="pool[currentSwipeIndex].avatar" 
+                                          class="w-full h-48 object-cover rounded-lg mb-3"
+                                        >
+                                        <div class="flex justify-between items-start">
+                                          <div>
+                                            <h6 class="font-bold text-sm text-slate-200" x-text="pool[currentSwipeIndex].name"></h6>
+                                            <p class="text-xs text-indigo-400" x-text="pool[currentSwipeIndex].role"></p>
+                                          </div>
+                                          <span class="text-xs text-slate-500 font-medium" x-text="pool[currentSwipeIndex].location"></span>
+                                        </div>
+                                        <p class="text-xs text-slate-400 mt-2">
+                                          Has <span class="text-slate-200 font-semibold" x-text="pool[currentSwipeIndex].skills.length"></span> skills listed, and enjoys <strong class="text-slate-300" x-text="pool[currentSwipeIndex].interests.slice(0,2).join(' & ')"></strong>.
+                                        </p>
+                                      </div>
+
+                                      <div class="flex gap-2">
+                                        <button 
+                                          @click="handleSwipe('pass')"
+                                          class="flex-1 py-2.5 bg-slate-950 hover:bg-slate-900 border border-slate-800 text-slate-400 rounded-xl font-bold text-xs"
+                                        >
+                                          Pass ✕
+                                        </button>
+                                        <button 
+                                          @click="handleSwipe('like')"
+                                          class="flex-1 py-2.5 bg-rose-600 hover:bg-rose-500 text-white rounded-xl font-bold text-xs flex justify-center items-center gap-1 shadow-lg shadow-rose-600/10"
+                                        >
+                                          <i data-lucide="heart" class="w-3.5 h-3.5 mr-1"></i> Opt-In Connect
+                                        </button>
+                                      </div>
+                                  </div>
+                                </template>
+
+                                <template x-if="currentSwipeIndex >= pool.length">
+                                  <div class="text-center py-8">
+                                    <i data-lucide="users" class="w-10 h-10 text-slate-600 mx-auto mb-2"></i>
+                                    <h6 class="font-bold text-sm text-slate-300">You've reached the end of the deck!</h6>
+                                    <p class="text-[11px] text-slate-500">More teammates matching your parameters join daily.</p>
+                                    <button 
+                                      @click="currentSwipeIndex = 0" 
+                                      class="mt-4 px-3 py-1.5 bg-slate-800 border border-slate-700 rounded text-xs text-indigo-300 hover:bg-slate-700"
+                                    >
+                                      Reset Deck Simulation
+                                    </button>
+                                  </div>
+                                </template>
+                              </div>
+                            </div>
+
+                            <!-- Match Side Columns -->
+                            <div class="md:col-span-5 bg-slate-900/40 border border-slate-800 p-5 rounded-2xl flex flex-col justify-between">
+                              <div>
+                                <h5 class="font-extrabold text-xs text-slate-400 uppercase tracking-widest mb-4">Mutual Matches (<span x-text="mutualMatches.length"></span>)</h5>
+                                <p class="text-[11px] text-slate-400 mb-4 leading-relaxed">
+                                  Unlocked ONLY because both of you opted-in mutually. Safe, confidential, and respectful.
+                                </p>
+
+                                <div class="space-y-2">
+                                  <template x-for="id in mutualMatches">
+                                    <div class="flex items-center gap-3 p-2 bg-slate-950 border border-slate-800 rounded-xl">
+                                      <img :src="getEmployeeById(id).avatar" class="w-9 h-9 rounded-full object-cover">
+                                      <div class="flex-1 min-w-0">
+                                        <span class="font-bold text-xs text-slate-200 block truncate" x-text="getEmployeeById(id).name"></span>
+                                        <span class="text-[10px] text-slate-500 block truncate" x-text="getEmployeeById(id).role"></span>
+                                      </div>
+                                      <button 
+                                        @click="demoTab = 'ai'; aiPrompt = 'Generate a personalized welcome note to send to ' + getEmployeeById(id).name; runMockSearch();"
+                                        class="text-[10px] text-indigo-400 font-bold border border-indigo-900 px-2 py-1 rounded hover:bg-indigo-950/50"
+                                      >
+                                        Ping Chat
+                                      </button>
+                                    </div>
+                                  </template>
+                                </div>
+                              </div>
+
+                              <div class="bg-indigo-950/30 p-3 rounded-lg border border-indigo-900/40 mt-4 text-[10px] text-slate-300">
+                                🔒 <strong>Zero Public Listing:</strong> No teammate can see your activity here unless you have a mutual matching selection state!
+                              </div>
+                            </div>
+
+                        </div>
+
+                        <div x-show="datingOptIn === 'none'" class="bg-slate-900/20 border border-slate-800/80 p-8 rounded-2xl text-center">
+                          <p class="text-xs text-slate-400">
+                            Select one of the Connection Level profiles above (e.g. "Dating Opt-In" or "Friendship Only") to preview matchmaking simulations.
+                          </p>
+                        </div>
+                      </div>
+                    </template>
+                </div>
+
+                <!-- SCREEN 7: AI TALENT ENGINE -->
+                <div x-show="demoTab === 'ai'" class="space-y-6 animate-fadeIn" x-cloak>
+                    <div>
+                      <h3 class="text-2xl font-bold text-slate-100">AI Teammate Finder</h3>
+                      <p class="text-xs text-slate-400">Query your internal network using natural conversational language.</p>
+                    </div>
+
+                    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4">
+                      <div class="flex gap-2">
+                        <input 
+                          type="text" 
+                          x-model="aiPrompt"
+                          @keyup.enter="runMockSearch()"
+                          placeholder="Try asking: 'Who understands CRM implementation?' or 'Who rides motorcycles?'"
+                          class="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-indigo-500"
+                        >
+                        <button 
+                          @click="runMockSearch()"
+                          :disabled="isAiLoading"
+                          class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-xl shadow-lg transition-colors shrink-0 disabled:opacity-50"
+                        >
+                          <span x-text="isAiLoading ? 'Analyzing...' : 'Ask AI Search'"></span>
+                        </button>
+                      </div>
+
+                      <div class="mt-4 flex flex-wrap gap-2">
+                        <span class="text-[10px] text-slate-400 pt-1">Sample Queries:</span>
+                        <button @click="aiPrompt = 'Who understands CRM implementation?'; runMockSearch();" class="text-[10px] px-2.5 py-1 bg-slate-950 border border-slate-800 rounded text-slate-300 hover:text-indigo-300 hover:border-indigo-500">"CRM Search"</button>
+                        <button @click="aiPrompt = 'Who rides motorcycles?'; runMockSearch();" class="text-[10px] px-2.5 py-1 bg-slate-950 border border-slate-800 rounded text-slate-300 hover:text-indigo-300 hover:border-indigo-500">"Motorcycles interest"</button>
+                        <button @click="aiPrompt = 'Who loves photography?'; runMockSearch();" class="text-[10px] px-2.5 py-1 bg-slate-950 border border-slate-800 rounded text-slate-300 hover:text-indigo-300 hover:border-indigo-500">"Photography Club"</button>
+                      </div>
+                    </div>
+
+                    <!-- Output box -->
+                    <div x-show="aiResponse" class="bg-slate-900/40 border border-slate-800 rounded-2xl p-5 space-y-4" x-cloak>
+                        <div class="flex items-center gap-2 border-b border-slate-800 pb-3">
+                          <i data-lucide="sparkles" class="w-4 h-4 text-indigo-400"></i>
+                          <h4 class="font-extrabold text-sm text-indigo-300">AI Analysis Result</h4>
+                        </div>
+                        
+                        <p class="text-xs text-slate-300 leading-relaxed" x-text="aiResponse.explanation"></p>
+
+                        <div class="grid sm:grid-cols-2 gap-4 pt-2">
+                          <template x-for="emp in aiResponse.results" :key="emp.id">
+                            <div class="flex items-center gap-3 p-3 bg-slate-950 border border-slate-800/80 rounded-xl">
+                              <img :src="emp.avatar" class="w-10 h-10 rounded-full object-cover">
+                              <div>
+                                <span class="font-bold text-xs text-slate-200 block" x-text="emp.name"></span>
+                                <span class="text-[10px] text-indigo-400 block" x-text="emp.role"></span>
+                                <div class="flex gap-1 mt-1">
+                                  <span class="text-[9px] px-1 bg-slate-800 rounded text-slate-400" x-text="emp.location"></span>
+                                  <span class="text-[9px] px-1 bg-slate-800 rounded text-slate-400" x-text="emp.status.replace('Open to ', '')"></span>
+                                </div>
+                              </div>
+                            </div>
+                          </template>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Alpine Data Logic scripts -->
+    <script>
+        const MOCK_DATA = [
+          {
+            id: 'emp-1',
+            name: 'Sarah Jenkins',
+            role: 'Chief Executive Officer',
+            department: 'Executive',
+            email: 'sarah.j@company.com',
+            location: 'New York (HQ)',
+            skills: ['Corporate Strategy', 'Venture Capital', 'Public Relations', 'Leadership'],
+            interests: ['Sailing', 'Philanthropy', 'Modern Art', 'Tennis'],
+            avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200',
+            status: 'Open to Networking',
+            reportsTo: null,
+            projects: ['Project Alpha', 'Vision 2030']
+          },
+          {
+            id: 'emp-2',
+            name: 'Marcus Chen',
+            role: 'Marketing Director',
+            department: 'Marketing',
+            email: 'marcus.c@company.com',
+            location: 'San Francisco',
+            skills: ['Brand Strategy', 'Growth Marketing', 'User Acquisition', 'SEO'],
+            interests: ['Cooking', 'Gaming', 'Coffee Brewing', 'Hiking'],
+            avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200',
+            status: 'Open to Friendship',
+            reportsTo: 'emp-1',
+            projects: ['Project Alpha', 'Campaign Horizon']
+          },
+          {
+            id: 'emp-3',
+            name: 'Rutvik Warkar',
+            role: 'Product Manager',
+            department: 'Product Management',
+            email: 'rutvik.w@company.com',
+            location: 'Austin, TX',
+            skills: ['Product Development', 'Silicone Technology', 'CRM Systems', 'Agile Methodology'],
+            interests: ['Motorcycles', 'Data Analytics', 'Photography', 'Camping'],
+            avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=200',
+            status: 'Open to Networking',
+            reportsTo: 'emp-1',
+            projects: ['Project Alpha', 'NextGen Core']
+          },
+          {
+            id: 'emp-4',
+            name: 'Aisha Rahman',
+            role: 'Lead UI/UX Designer',
+            department: 'Product Management',
+            email: 'aisha.r@company.com',
+            location: 'London, UK',
+            skills: ['User Research', 'Figma', 'Interactive Design', 'Wireframing'],
+            interests: ['Photography', 'Oil Painting', 'Indie Music', 'Gaming'],
+            avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200',
+            status: 'Open to Dating',
+            reportsTo: 'emp-3',
+            projects: ['Project Alpha', 'Design Systems']
+          },
+          {
+            id: 'emp-5',
+            name: 'Chloe Chevalier',
+            role: 'Marketing Manager',
+            department: 'Marketing',
+            email: 'chloe.c@company.com',
+            location: 'Paris, FR',
+            skills: ['Content Marketing', 'Event Planning', 'CRM Systems', 'Copywriting'],
+            interests: ['Yoga', 'Fiction Writing', 'Baking', 'Cricket'],
+            avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=200',
+            status: 'Open to Dating',
+            reportsTo: 'emp-2',
+            projects: ['Campaign Horizon']
+          },
+          {
+            id: 'emp-6',
+            name: 'David Kim',
+            role: 'Senior Software Engineer',
+            department: 'Engineering',
+            email: 'david.k@company.com',
+            location: 'Seoul, KR',
+            skills: ['Node.js', 'React Native', 'Data Pipelines', 'Cloud Architecture'],
+            interests: ['Gaming', 'Mechanical Keyboards', 'Anime', 'Fitness'],
+            avatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=200',
+            status: 'Open to Dating',
+            reportsTo: 'emp-3',
+            projects: ['NextGen Core']
+          },
+          {
+            id: 'emp-7',
+            name: 'Elena Rostova',
+            role: 'Marketing Executive',
+            department: 'Marketing',
+            email: 'elena.r@company.com',
+            location: 'Munich, DE',
+            skills: ['Social Media Analytics', 'Sponsorships', 'Adobe Suite'],
+            interests: ['Fitness', 'Photography', 'Snowboarding', 'Travel'],
+            avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=200',
+            status: 'Open to Friendship',
+            reportsTo: 'emp-5',
+            projects: ['Campaign Horizon']
+          },
+          {
+            id: 'emp-8',
+            name: 'Rajesh Patel',
+            role: 'Data Scientist',
+            department: 'Engineering',
+            email: 'rajesh.p@company.com',
+            location: 'Bangalore, IN',
+            skills: ['Python', 'Machine Learning', 'Data Analytics', 'CRM Systems'],
+            interests: ['Cricket', 'Astronomy', 'Sci-Fi Podcasts', 'Biking'],
+            avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&q=80&w=200',
+            status: 'Open to Networking',
+            reportsTo: 'emp-3',
+            projects: ['NextGen Core', 'Project Alpha']
+          }
+        ];
+
+        function appState() {
+            return {
+                currentTab: 'landing',
+                demoTab: 'dashboard',
+                employeeSlider: 1200,
+                selectedPlan: 'Professional',
+                planRate: {
+                    'Starter': 2,
+                    'Professional': 5,
+                    'Enterprise': 8
+                },
+                searchQuery: '',
+                selectedDept: 'All',
+                selectedStatus: 'All',
+                datingOptIn: 'none',
+                globalDatingEnabled: true,
+                currentSwipeIndex: 0,
+                aiPrompt: '',
+                aiResponse: null,
+                isAiLoading: false,
+                subscribedClubs: ['Gaming Community', 'Photography Club'],
+                mutualMatches: ['emp-4'],
+                employees: MOCK_DATA,
+
+                initApp() {
+                    setTimeout(() => {
+                        lucide.createIcons();
+                    }, 200);
+                },
+
+                toggleMainTab() {
+                    this.currentTab = this.currentTab === 'landing' ? 'demo' : 'landing';
+                    this.initIcons();
+                },
+
+                initIcons() {
+                    setTimeout(() => {
+                        lucide.createIcons();
+                    }, 100);
+                },
+
+                getManagerName(managerId) {
+                    if (!managerId) return 'Direct Board';
+                    const manager = this.employees.find(e => e.id === managerId);
+                    return manager ? manager.name : 'Direct Board';
+                },
+
+                filteredEmployees() {
+                    return this.employees.filter(emp => {
+                        const matchesSearch = 
+                            emp.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+                            emp.role.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+                            emp.skills.some(skill => skill.toLowerCase().includes(this.searchQuery.toLowerCase())) ||
+                            emp.interests.some(interest => interest.toLowerCase().includes(this.searchQuery.toLowerCase()));
+                        
+                        const matchesDept = this.selectedDept === 'All' || emp.department === this.selectedDept;
+                        
+                        let matchesStatus = true;
+                        if (this.selectedStatus !== 'All') {
+                            matchesStatus = emp.status === this.selectedStatus;
+                        }
+                        
+                        return matchesSearch && matchesDept && matchesStatus;
+                    });
+                },
+
+                toggleClubSubscription(clubName) {
+                    if (this.subscribedClubs.includes(clubName)) {
+                        this.subscribedClubs = this.subscribedClubs.filter(c => c !== clubName);
+                    } else {
+                        this.subscribedClubs.push(clubName);
+                    }
+                },
+
+                getSwipePool() {
+                    return this.employees.filter(emp => {
+                        if (this.datingOptIn === 'dating') return emp.status === 'Open to Dating';
+                        if (this.datingOptIn === 'friendship') return emp.status === 'Open to Friendship';
+                        return emp.status === 'Open to Networking';
+                    });
+                },
+
+                handleSwipe(action) {
+                    const pool = this.getSwipePool();
+                    const target = pool[this.currentSwipeIndex];
+                    if (action === 'like' && target) {
+                        if (target.status === 'Open to Dating' || target.status === 'Open to Friendship') {
+                            if (!this.mutualMatches.includes(target.id)) {
+                                this.mutualMatches.push(target.id);
+                            }
+                        }
+                    }
+                    this.currentSwipeIndex++;
+                },
+
+                getEmployeeById(id) {
+                    return this.employees.find(e => e.id === id) || this.employees[2];
+                },
+
+                runMockSearch() {
+                    if (!this.aiPrompt.trim()) return;
+                    this.isAiLoading = true;
+                    this.aiResponse = null;
+
+                    setTimeout(() => {
+                        const promptLower = this.aiPrompt.toLowerCase();
+                        let matches = [];
+                        let explanation = "";
+
+                        if (promptLower.includes('crm') || promptLower.includes('customer relationship')) {
+                            matches = this.employees.filter(emp => emp.skills.some(s => s.toLowerCase().includes('crm')));
+                            explanation = "I found 4 team members with verified 'CRM Systems' expertise. Rutvik Warkar is a Product Manager leading implementation projects.";
+                        } else if (promptLower.includes('motorcycle') || promptLower.includes('biking') || promptLower.includes('ride')) {
+                            matches = this.employees.filter(emp => emp.interests.some(i => i.toLowerCase().includes('motorcycles') || i.toLowerCase().includes('biking')));
+                            explanation = "Awesome! Rutvik Warkar and Rajesh Patel are both avid bikers. Rutvik is passionate about motorcycles, and Rajesh enjoys regional biking trips.";
+                        } else if (promptLower.includes('photography') || promptLower.includes('camera')) {
+                            matches = this.employees.filter(emp => emp.interests.some(i => i.toLowerCase().includes('photography')));
+                            explanation = "Photography is highly popular! Rutvik, Aisha, and Elena are active photography enthusiasts and members of the corporate Photography Club.";
+                        } else if (promptLower.includes('marketing') || promptLower.includes('campaign')) {
+                            matches = this.employees.filter(emp => emp.department === 'Marketing' || emp.role.includes('Marketing'));
+                            explanation = "Here are our Marketing specialists. Marcus Chen is the Director, leading campaign operations with Chloe and Elena.";
+                        } else {
+                            matches = this.employees.filter(emp => 
+                              emp.name.toLowerCase().includes(promptLower) || 
+                              emp.skills.some(s => s.toLowerCase().includes(promptLower)) ||
+                              emp.interests.some(i => i.toLowerCase().includes(promptLower))
+                            );
+                            if (matches.length > 0) {
+                              explanation = `Found ${matches.length} colleague(s) associated with your query. Here is who they are:`;
+                            } else {
+                              matches = [this.employees[2]]; // Default to Rutvik
+                              explanation = `I couldn't locate specific tags matching "${this.aiPrompt}", but you might want to sync with Rutvik Warkar (Product Manager) who coordinates widely across divisions!`;
+                            }
+                        }
+
+                        this.aiResponse = { explanation, results: matches };
+                        this.isAiLoading = false;
+                        this.initIcons();
+                    }, 800);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
